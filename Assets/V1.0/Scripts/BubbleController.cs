@@ -21,9 +21,18 @@ public class BubbleController : MonoBehaviour
         {
             //rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             Bubble bc = collision.transform.GetComponent<Bubble>();
+            //GameManager.Instance.Bubbles.Push(bc);
+            if (transform.GetComponent<Bubble>().colorName != bc.colorName)
+            {
+                isAllowed = false;
+                return;
+            }
+            GameManager.Instance.Bubbles.Clear();
+            GameManager.Instance.connectedBubbles.Clear();
             GameManager.Instance.Bubbles.Push(bc);
-            GameManager.Instance.CheckAndPopNeighbors(transform.GetComponent<Bubble>().colorName);
+            GameManager.Instance.CheckAndPopNeighbors();
             isAllowed = false;
+            return;
         }
     }
 }

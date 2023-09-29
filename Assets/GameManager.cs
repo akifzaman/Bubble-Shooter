@@ -31,12 +31,12 @@ public class GameManager : MonoBehaviour
     {
         foreach (var item in BubblesInBoard)
         {
-            item.isVisited = false;
+            if(item.gameObject != null) item.isVisited = false;
         }
     }
-    public void CheckAndPopNeighbors(string bubbleColor)
+    public void CheckAndPopNeighbors()
     {
-        Debug.Log(bubbleColor);
+        //Debug.Log(bubbleColor);
         while (Bubbles.Count > 0)
         {
             Bubble currentBubble = Bubbles.Pop();
@@ -47,13 +47,13 @@ public class GameManager : MonoBehaviour
                 continue;
             }
             currentBubble.isVisited = true;
-            Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.51f);
+            Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.45f);
 
             for(int i = 0; i < neighbors.Length; i++)
             {
                 Bubble neighborBubble = neighbors[i].GetComponent<Bubble>();
                 if (neighborBubble == null) continue;
-                else if (neighborBubble.CompareTag("Bubble") && neighborBubble.colorName == bubbleColor)
+                else if (neighborBubble.CompareTag("Bubble") && neighborBubble.colorName == currentBubble.colorName)
                 {
                     if (!neighborBubble.isVisited)
                     {
@@ -65,9 +65,10 @@ public class GameManager : MonoBehaviour
         }
         if(connectedBubbles.Count >= 3)
         {
+            Debug.Log(connectedBubbles.Count);
             foreach (Bubble currentBubble in connectedBubbles)
             {
-                //BubblesInBoard.Remove(currentBubble);
+                BubblesInBoard.Remove(currentBubble);
                 Destroy(currentBubble.gameObject);
             }
         }

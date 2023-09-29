@@ -33,7 +33,7 @@ public class BubbleSpawner : MonoBehaviour
         if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.aButton.wasPressedThisFrame)
         {
             OnBubbleShot?.Invoke();
-            GameManager.Instance.connectedBubbles.Clear();
+            //GameManager.Instance.connectedBubbles.Clear();
             counter++;
             var bubble = Instantiate(Prefabs[nextColorIndex], SpawnPosition.position, new Quaternion(targetRotation,0,0,0));
             bubble.GetComponent<BubbleController>().isAllowed = true;
