@@ -44,18 +44,17 @@ public class GameManager : MonoBehaviour
             if (currentBubble.isVisited)
             {
                 if (Bubbles.Count > 0) currentBubble = Bubbles.Pop();
-                //continue;
+                continue;
             }
             currentBubble.isVisited = true;
-            Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.45f);
+            Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.51f);
 
-            for(int i = 1; i < neighbors.Length; i++)
+            for(int i = 0; i < neighbors.Length; i++)
             {
                 Bubble neighborBubble = neighbors[i].GetComponent<Bubble>();
                 if (neighborBubble == null) continue;
                 else if (neighborBubble.CompareTag("Bubble") && neighborBubble.colorName == bubbleColor)
                 {
-                    Debug.Log(Bubbles.Count);
                     if (!neighborBubble.isVisited)
                     {
                         Bubbles.Push(neighborBubble);
