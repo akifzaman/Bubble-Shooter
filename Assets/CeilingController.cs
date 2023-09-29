@@ -6,7 +6,7 @@ public class CeilingController : MonoBehaviour
     {
         if (collision.transform.CompareTag("Bubble"))
         {
-            GameManager.Instance.LooseBubblesCheckerSList.Add(collision.transform.GetComponent<Bubble>());
+            GameManager.Instance.CeilingBubbles.Add(collision.transform.GetComponent<Bubble>());
             //Debug.Log(GameManager.Instance.LooseBubblesCheckerSList.Count);
         }
     }

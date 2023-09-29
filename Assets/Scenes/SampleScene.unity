@@ -837,6 +837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfd75958bf8923740a5212398aab3c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CeilingBubblesList: []
 --- !u!4 &722760025
 Transform:
   m_ObjectHideFlags: 0
@@ -1172,7 +1173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4195552218249377982, guid: 6ea190d15b64b02479ac21ad400f8685, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.7686954
+      value: 4.47
       objectReference: {fileID: 0}
     - target: {fileID: 4195552218249377982, guid: 6ea190d15b64b02479ac21ad400f8685, type: 3}
       propertyPath: m_LocalPosition.y

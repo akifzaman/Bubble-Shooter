@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public HashSet<Bubble> BubblesInBoard = new HashSet<Bubble>();
     public Stack<Bubble> Bubbles = new Stack<Bubble>();
     public Stack<Bubble> LooseBubblesCheckerStack = new Stack<Bubble>();
-    public List<Bubble> LooseBubblesCheckerSList = new List<Bubble>();
+    public List<Bubble> CeilingBubblesList = new List<Bubble>();
     public HashSet<Bubble> connectedBubbles = new HashSet<Bubble>();
     public HashSet<Bubble> CeilingBubbles = new HashSet<Bubble>();
     public void Awake()
@@ -29,14 +29,16 @@ public class GameManager : MonoBehaviour
     }
     public void MakeAllBubbleVisitable()
     {
-        foreach (var item in BubblesInBoard)
+        if(BubblesInBoard.Count > 0)
         {
-            if(item.gameObject != null) item.isVisited = false;
-        }
+            foreach (var item in BubblesInBoard)
+            {
+                if (item != null) item.isVisited = false;
+            }
+        }   
     }
     public void CheckAndPopNeighbors()
     {
-        //Debug.Log(bubbleColor);
         while (Bubbles.Count > 0)
         {
             Bubble currentBubble = Bubbles.Pop();
@@ -68,34 +70,36 @@ public class GameManager : MonoBehaviour
             Debug.Log(connectedBubbles.Count);
             foreach (Bubble currentBubble in connectedBubbles)
             {
-                BubblesInBoard.Remove(currentBubble);
+                if(BubblesInBoard.Contains(currentBubble)) BubblesInBoard.Remove(currentBubble);
+                else if(CeilingBubbles.Contains(currentBubble)) CeilingBubbles.Remove(currentBubble);
                 Destroy(currentBubble.gameObject);
             }
-        }
-        //StartCoroutine(DelayForHalfSecond());
+            StartCoroutine(DelayForHalfSecond());
+        }   
     }
 
     IEnumerator DelayForHalfSecond()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(0.5f);
         IdentifyLooseBubbleAndPop();
-        MakeAllBubbleVisitable();
     }
     public void IdentifyLooseBubbleAndPop()
     {
-        foreach (var item in LooseBubblesCheckerSList)
+        foreach (var item in CeilingBubbles)
         {
+            if(item == null) continue;
             item.isLoose = false;
             LooseBubblesCheckerStack.Push(item);
             while (LooseBubblesCheckerStack.Count > 0)
             {
                 Bubble currentBubble = LooseBubblesCheckerStack.Pop();
-                if (currentBubble.isVisited)
+                if (currentBubble.isLoose)
                 {
                     if (LooseBubblesCheckerStack.Count > 0) currentBubble = LooseBubblesCheckerStack.Pop();
                     continue;
                 }
-                Collider2D[] neighbors = Physics2D.OverlapCircleAll(item.transform.position, 0.45f);
+                //currentBubble.isVisited = true;
+                Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.45f);
 
                 foreach (Collider2D neighbor in neighbors)
                 {
@@ -103,9 +107,9 @@ public class GameManager : MonoBehaviour
                     if (neighborBubble == null) continue;
                     else if (neighborBubble.CompareTag("Bubble"))
                     {
-                        if (!neighborBubble.isVisited)
+                        if (neighborBubble.isLoose)
                         {
-                            neighborBubble.isVisited = true;
+                            //neighborBubble.isVisited = true;
                             neighborBubble.isLoose = false;
                             LooseBubblesCheckerStack.Push(neighborBubble);
                         }
@@ -114,12 +118,17 @@ public class GameManager : MonoBehaviour
 
             }
         }
+        Debug.Log(BubblesInBoard.Count);
         foreach (var item in BubblesInBoard)
         {
             if (item.isLoose)
             {
-                if(item.gameObject != null) Destroy(item.gameObject);
+                Debug.Log(item.colorName);
+                if (item.gameObject != null) Destroy(item.gameObject);
+                if (BubblesInBoard.Contains(item)) BubblesInBoard.Remove(item);
             }
         }
+        //BubblesInBoard.RemoveWhere(bubble => bubble.isLoose == true);
+        MakeAllBubbleVisitable();
     }
 }
