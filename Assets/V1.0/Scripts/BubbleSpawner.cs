@@ -12,7 +12,6 @@ public class BubbleSpawner : MonoBehaviour
     public float rotationSpeed = 45f; // Rotation speed in degrees per second
     public float minRotation = -45f; // Minimum rotation in degrees
     public float maxRotation = 45f;  // Maximum rotation in degrees
-    private InputAction moveAction;
     public int nextColorIndex;
     public UnityEvent OnBubbleShot;
     public void Awake()
@@ -33,7 +32,6 @@ public class BubbleSpawner : MonoBehaviour
         if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.aButton.wasPressedThisFrame)
         {
             OnBubbleShot?.Invoke();
-            //GameManager.Instance.connectedBubbles.Clear();
             counter++;
             var bubble = Instantiate(Prefabs[nextColorIndex], SpawnPosition.position, new Quaternion(targetRotation,0,0,0));
             bubble.GetComponent<BubbleController>().isAllowed = true;

@@ -67,15 +67,15 @@ public class GameManager : MonoBehaviour
         }
         if(connectedBubbles.Count >= 3)
         {
-            Debug.Log(connectedBubbles.Count);
             foreach (Bubble currentBubble in connectedBubbles)
             {
                 if(BubblesInBoard.Contains(currentBubble)) BubblesInBoard.Remove(currentBubble);
                 else if(CeilingBubbles.Contains(currentBubble)) CeilingBubbles.Remove(currentBubble);
                 Destroy(currentBubble.gameObject);
+                Debug.Log("Cluster Destroyed");
             }
             StartCoroutine(DelayForHalfSecond());
-        }   
+        }
     }
 
     IEnumerator DelayForHalfSecond()
@@ -85,9 +85,10 @@ public class GameManager : MonoBehaviour
     }
     public void IdentifyLooseBubbleAndPop()
     {
+        CeilingBubbles.RemoveWhere(ceilingBubble => ceilingBubble == null);
         foreach (var item in CeilingBubbles)
         {
-            if(item == null) continue;
+            if (item == null) continue;     
             item.isLoose = false;
             LooseBubblesCheckerStack.Push(item);
             while (LooseBubblesCheckerStack.Count > 0)
@@ -98,7 +99,6 @@ public class GameManager : MonoBehaviour
                     if (LooseBubblesCheckerStack.Count > 0) currentBubble = LooseBubblesCheckerStack.Pop();
                     continue;
                 }
-                //currentBubble.isVisited = true;
                 Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.45f);
 
                 foreach (Collider2D neighbor in neighbors)
@@ -109,26 +109,22 @@ public class GameManager : MonoBehaviour
                     {
                         if (neighborBubble.isLoose)
                         {
-                            //neighborBubble.isVisited = true;
                             neighborBubble.isLoose = false;
                             LooseBubblesCheckerStack.Push(neighborBubble);
                         }
                     }
                 }
-
             }
         }
-        Debug.Log(BubblesInBoard.Count);
         foreach (var item in BubblesInBoard)
         {
             if (item.isLoose)
             {
-                Debug.Log(item.colorName);
                 if (item.gameObject != null) Destroy(item.gameObject);
-                if (BubblesInBoard.Contains(item)) BubblesInBoard.Remove(item);
+                Debug.Log("Loose Destroyed");
             }
         }
-        //BubblesInBoard.RemoveWhere(bubble => bubble.isLoose == true);
+        BubblesInBoard.RemoveWhere(bubble => bubble.isLoose == true);
         MakeAllBubbleVisitable();
     }
 }
