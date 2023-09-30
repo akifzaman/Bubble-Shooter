@@ -82,7 +82,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log(connectedBubbles.Count);
         if(connectedBubbles.Count >= 3)
         {
             foreach (Bubble currentBubble in connectedBubbles)
@@ -140,7 +139,6 @@ public class GameManager : MonoBehaviour
                     item.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
                     item.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                     item.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-                    //Destroy(item.gameObject);
                 }
             }
         }

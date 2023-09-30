@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,7 +33,6 @@ public class BubbleController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             rb.isKinematic = true;
-            //rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
         if (collision.transform.CompareTag("Bubble") && isAllowed && !collision.transform.GetComponent<Bubble>().isVisited)
         {

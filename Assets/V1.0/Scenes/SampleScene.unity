@@ -3353,6 +3353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 391382059}
   - component: {fileID: 391382060}
+  - component: {fileID: 391382061}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -3391,6 +3392,19 @@ MonoBehaviour:
   NextBubbleImage: {fileID: 575590279}
   ScoreText: {fileID: 1613661407}
   NotificationText: {fileID: 1416452953}
+--- !u!114 &391382061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391382058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f559607a62acf4e844403ed6b2e901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitButton: {fileID: 134274112}
 --- !u!1 &392323816
 GameObject:
   m_ObjectHideFlags: 0
@@ -3600,6 +3614,8 @@ MonoBehaviour:
   minRotation: -90
   maxRotation: 90
   nextColorIndex: 0
+  leftStickValue: {x: 0, y: 0}
+  targetRotation: 0
   OnBubbleShot:
     m_PersistentCalls:
       m_Calls: []

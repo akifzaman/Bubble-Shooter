@@ -10,10 +10,12 @@ public class BubbleSpawner : MonoBehaviour
     public int counter;
     public List<Bubble> Prefabs = new List<Bubble>();
     public Transform SpawnPosition;
-    public float rotationSpeed = 45f; // Rotation speed in degrees per second
-    public float minRotation = -45f; // Minimum rotation in degrees
-    public float maxRotation = 45f;  // Maximum rotation in degrees
+    public float rotationSpeed;
+    public float minRotation;
+    public float maxRotation;
     public int nextColorIndex;
+    public Vector2 leftStickValue;
+    public float targetRotation;
     public Dictionary<string, int> IdenticalBubbles = new Dictionary<string, int>();
 
     public UnityEvent OnBubbleShot;
@@ -35,8 +37,8 @@ public class BubbleSpawner : MonoBehaviour
     {
         if (Prefabs.Count > 0)
         {
-            var leftStickValue = Gamepad.current.leftStick.ReadValue();
-            float targetRotation = Mathf.Lerp(minRotation, maxRotation, (-leftStickValue.x + 1f) / 2f);
+            leftStickValue = Gamepad.current.leftStick.ReadValue();
+            targetRotation = Mathf.Lerp(minRotation, maxRotation, (-leftStickValue.x + 1f) / 2f);
             transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
 
             if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.aButton.wasPressedThisFrame)
@@ -52,20 +54,6 @@ public class BubbleSpawner : MonoBehaviour
                     var randomIndex = Random.Range(0, Prefabs.Count);
                     nextColorIndex = randomIndex;
                     UIManager.Instance.UpdateNextBubbleImage(Prefabs[nextColorIndex]);
-                    //Debug.Log(Prefabs[nextColorIndex]);
-                }
-                else
-                {
-                    var randomIndex = Random.Range(0, Prefabs.Count);
-                    nextColorIndex = randomIndex;
-                    var bubble = Instantiate(Prefabs[nextColorIndex], SpawnPosition.position, new Quaternion(targetRotation, 0, 0, 0));
-                    bubble.GetComponent<BubbleController>().isAllowed = true;
-                    Rigidbody2D rb = bubble.GetComponent<Rigidbody2D>();
-                    rb.velocity = new Vector2(leftStickValue.x * 10f, Mathf.Max(10, leftStickValue.y * 10f));
-                    randomIndex = Random.Range(0, Prefabs.Count);
-                    nextColorIndex = randomIndex;
-                    UIManager.Instance.UpdateNextBubbleImage(Prefabs[nextColorIndex]);
-                    //Debug.Log(Prefabs[nextColorIndex]);
                 }
             }
         }
@@ -90,8 +78,12 @@ public class BubbleSpawner : MonoBehaviour
                 {
                     if (prefab.colorName == item.Key)
                     {
-                        Debug.Log("Removed");
                         Prefabs.Remove(prefab);
+                        var randomIndex = Random.Range(0, Prefabs.Count);
+                        nextColorIndex = randomIndex;
+                        randomIndex = Random.Range(0, Prefabs.Count);
+                        nextColorIndex = randomIndex;
+                        if(Prefabs.Count > 0) UIManager.Instance.UpdateNextBubbleImage(Prefabs[nextColorIndex]);
                         break;
                     }
                 }
