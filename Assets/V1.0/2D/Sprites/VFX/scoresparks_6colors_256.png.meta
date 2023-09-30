@@ -757,7 +757,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      scoresparks_6colors_256_28: -344267959
+      scoresparks_6colors_256_7: 1983962867
       scoresparks_6colors_256_10: 210236801
       scoresparks_6colors_256_13: -1299924514
       scoresparks_6colors_256_5: -174649848
@@ -785,8 +785,8 @@ TextureImporter:
       scoresparks_6colors_256_26: -1278962831
       scoresparks_6colors_256_4: 1701804557
       scoresparks_6colors_256_21: 1819511839
-      scoresparks_6colors_256_7: 1983962867
       scoresparks_6colors_256_14: -559779935
+      scoresparks_6colors_256_28: -344267959
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

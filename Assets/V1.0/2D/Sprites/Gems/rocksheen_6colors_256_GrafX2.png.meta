@@ -1010,7 +1010,6 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       rocksheen_6colors_256_GrafX2_25: 494698721
-      rocksheen_6colors_256_GrafX2_20: -1581874996
       rocksheen_6colors_256_GrafX2_40: -517545520
       rocksheen_6colors_256_GrafX2_7: 1757615843
       rocksheen_6colors_256_GrafX2_13: 41875005
@@ -1019,11 +1018,12 @@ TextureImporter:
       rocksheen_6colors_256_GrafX2_26: 353655651
       rocksheen_6colors_256_GrafX2_4: -1468228076
       rocksheen_6colors_256_GrafX2_6: 1664460340
-      rocksheen_6colors_256_GrafX2_28: -2025807542
+      rocksheen_6colors_256_GrafX2_20: -1581874996
       rocksheen_6colors_256_GrafX2_9: -824619290
       rocksheen_6colors_256_GrafX2_14: -572868930
       rocksheen_6colors_256_GrafX2_5: -69362755
       rocksheen_6colors_256_GrafX2_24: -1446410001
+      rocksheen_6colors_256_GrafX2_28: -2025807542
       rocksheen_6colors_256_GrafX2_0: -1249456897
       rocksheen_6colors_256_GrafX2_27: -641388146
       rocksheen_6colors_256_GrafX2_32: -1654372393
