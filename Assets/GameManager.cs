@@ -5,6 +5,8 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public float neighborDetectionRange;
+    public GameObject BubbleGameObjectReference;
     public HashSet<Bubble> BubblesInBoard = new HashSet<Bubble>();
     public Stack<Bubble> Bubbles = new Stack<Bubble>();
     public Stack<Bubble> LooseBubblesCheckerStack = new Stack<Bubble>();
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        neighborDetectionRange = 0.5f;
         OnDestroyCluster.AddListener(() =>
         {
             IdentifyLooseBubbleAndPop();
@@ -59,7 +62,7 @@ public class GameManager : MonoBehaviour
                 continue;
             }
             currentBubble.isVisited = true;
-            Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.45f);
+            Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, neighborDetectionRange);
 
             for(int i = 0; i < neighbors.Length; i++)
             {
@@ -75,6 +78,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        Debug.Log(connectedBubbles.Count);
         if(connectedBubbles.Count >= 3)
         {
             foreach (Bubble currentBubble in connectedBubbles)
@@ -100,7 +104,7 @@ public class GameManager : MonoBehaviour
             while (LooseBubblesCheckerStack.Count > 0)
             {
                 Bubble currentBubble = LooseBubblesCheckerStack.Pop();
-                Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.45f);
+                Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, neighborDetectionRange);
 
                 foreach (Collider2D neighbor in neighbors)
                 {

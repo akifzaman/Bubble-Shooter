@@ -4,7 +4,6 @@ using UnityEngine;
 public class BubbleController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    public Color bubbleColor;
     public string colorName;
     public bool isAllowed;
     public HashSet<Bubble> connectedMatchedBubbles = new HashSet<Bubble>();

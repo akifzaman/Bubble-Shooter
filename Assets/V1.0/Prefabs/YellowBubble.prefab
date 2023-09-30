@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7012106603254421883}
   - component: {fileID: 7012106603254421884}
   - component: {fileID: -1336277703596424213}
+  - component: {fileID: 504634223}
   m_Layer: 0
   m_Name: YellowBubble
   m_TagString: Bubble
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 7012106603254421872}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -1757943564, guid: 2300294ab571f74479d384ba5a2ff1ba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,9 +102,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.003237314, y: 0.004624698}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.07674792
 --- !u!114 &7012106603254421883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,3 +157,23 @@ MonoBehaviour:
   isLoose: 0
   bubbleColor: {r: 1, g: 0.92156863, b: 0, a: 1}
   colorName: yellow
+--- !u!95 &504634223
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7012106603254421872}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 24baed4e121d20d489cd41171859746c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
