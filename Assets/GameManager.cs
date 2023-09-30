@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     public HashSet<Bubble> BubblesInBoard = new HashSet<Bubble>();
     public Stack<Bubble> Bubbles = new Stack<Bubble>();
     public Stack<Bubble> LooseBubblesCheckerStack = new Stack<Bubble>();
-    public List<Bubble> CeilingBubblesList = new List<Bubble>();
     public HashSet<Bubble> connectedBubbles = new HashSet<Bubble>();
-    public HashSet<Bubble> CeilingBubbles = new HashSet<Bubble>();
+    public List<Bubble> CeilingBubbles = new List<Bubble>();
+    public UnityEvent OnDestroyCluster;
     public void Awake()
     {
         if(Instance == null) Instance = this;
@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        BubbleSpawner.instance.OnBubbleShot.AddListener(() =>
+        OnDestroyCluster.AddListener(() =>
         {
-            MakeAllBubbleVisitable();
+            IdentifyLooseBubbleAndPop();
         });
     }
     public void RegisterBubble(Bubble bubble)
@@ -69,36 +69,32 @@ public class GameManager : MonoBehaviour
         {
             foreach (Bubble currentBubble in connectedBubbles)
             {
-                if(BubblesInBoard.Contains(currentBubble)) BubblesInBoard.Remove(currentBubble);
-                else if(CeilingBubbles.Contains(currentBubble)) CeilingBubbles.Remove(currentBubble);
+                BubblesInBoard.Remove(currentBubble);
+                CeilingBubbles.Remove(currentBubble);
                 Destroy(currentBubble.gameObject);
-                Debug.Log("Cluster Destroyed");
             }
-            StartCoroutine(DelayForHalfSecond());
         }
-    }
-
-    IEnumerator DelayForHalfSecond()
-    {
-        yield return new WaitForSeconds(0.5f);
-        IdentifyLooseBubbleAndPop();
+        OnDestroyCluster?.Invoke();
     }
     public void IdentifyLooseBubbleAndPop()
     {
-        CeilingBubbles.RemoveWhere(ceilingBubble => ceilingBubble == null);
         foreach (var item in CeilingBubbles)
         {
-            if (item == null) continue;     
+            if (item == null)
+            {
+                continue;
+            }
             item.isLoose = false;
             LooseBubblesCheckerStack.Push(item);
             while (LooseBubblesCheckerStack.Count > 0)
             {
                 Bubble currentBubble = LooseBubblesCheckerStack.Pop();
-                if (currentBubble.isLoose)
-                {
-                    if (LooseBubblesCheckerStack.Count > 0) currentBubble = LooseBubblesCheckerStack.Pop();
-                    continue;
-                }
+                //if (currentBubble.isLoose)
+                //{
+                //    //Debug.Log("Hello");
+                //    if (LooseBubblesCheckerStack.Count > 0) currentBubble = LooseBubblesCheckerStack.Pop();
+                //    continue;
+                //}
                 Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.45f);
 
                 foreach (Collider2D neighbor in neighbors)
@@ -121,10 +117,8 @@ public class GameManager : MonoBehaviour
             if (item.isLoose)
             {
                 if (item.gameObject != null) Destroy(item.gameObject);
-                Debug.Log("Loose Destroyed");
             }
         }
         BubblesInBoard.RemoveWhere(bubble => bubble.isLoose == true);
-        MakeAllBubbleVisitable();
     }
 }

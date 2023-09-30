@@ -12,5 +12,10 @@ public class Bubble : MonoBehaviour
         GetComponent<SpriteRenderer>().color = bubbleColor;
         GameManager.Instance.RegisterBubble(this);
         isLoose = true;
+        BubbleSpawner.instance.OnBubbleShot.AddListener(() =>
+        {
+            isVisited = false;
+            isLoose = true;
+        });
     }
 }

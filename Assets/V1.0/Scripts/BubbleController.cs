@@ -16,10 +16,14 @@ public class BubbleController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation; //for testing purpose only
+        if (collision.transform.CompareTag("Bubble") || (collision.transform.CompareTag("Ceiling")))
+        {
+            rb.velocity = Vector3.zero;
+            rb.isKinematic = true;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        }
         if (collision.transform.CompareTag("Bubble") && isAllowed && !collision.transform.GetComponent<Bubble>().isVisited)
         {
-            //rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             Bubble bc = collision.transform.GetComponent<Bubble>();
             if (transform.GetComponent<Bubble>().colorName != bc.colorName)
             {
