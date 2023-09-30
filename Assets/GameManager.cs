@@ -5,6 +5,8 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public bool isGameOver;
+    public int Score;
     public float neighborDetectionRange;
     public GameObject BubbleGameObjectReference;
     public HashSet<Bubble> BubblesInBoard = new HashSet<Bubble>();
@@ -13,6 +15,7 @@ public class GameManager : MonoBehaviour
     public HashSet<Bubble> connectedBubbles = new HashSet<Bubble>();
     public List<Bubble> CeilingBubbles = new List<Bubble>();
     public UnityEvent OnDestroyCluster;
+    public Transform EndLinePoint;
     public CeilingController CeilingController;
     public void Awake()
     {
@@ -21,12 +24,13 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        isGameOver = false;
         neighborDetectionRange = 0.5f;
         OnDestroyCluster.AddListener(() =>
         {
             IdentifyLooseBubbleAndPop();
         });
-        InvokeRepeating("MoveDownWard", 15f, 15f);
+        if(!GameManager.Instance.isGameOver) InvokeRepeating("MoveDownWard", 15f, 15f);
     }
     public void MoveDownWard()
     {
@@ -86,6 +90,8 @@ public class GameManager : MonoBehaviour
                 BubblesInBoard.Remove(currentBubble);
                 CeilingBubbles.Remove(currentBubble);
                 currentBubble.GetComponent<BubbleController>().OnDestroyBubble();
+                Score += 10;
+                UIManager.Instance.OnScoreUpdate(Score);
                 Destroy(currentBubble.gameObject);
             }
             OnDestroyCluster?.Invoke();
@@ -128,6 +134,8 @@ public class GameManager : MonoBehaviour
             {
                 if (item.gameObject != null)
                 {
+                    Score += 10;
+                    UIManager.Instance.OnScoreUpdate(Score);
                     item.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                     item.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
                     item.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
@@ -140,7 +148,8 @@ public class GameManager : MonoBehaviour
         BubbleSpawner.instance.ModifyPrefabList();
         if (BubbleSpawner.instance.Prefabs.Count == 0)
         {
-            Debug.Log("Congratulations!!!");
+            UIManager.Instance.OnGameOver();
+            UIManager.Instance.UpdateNotificationText("Congratulations!");
         }
     }
 }
