@@ -1,16 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosionAnimationController : MonoBehaviour
 {
+    public float duration;
     private void OnEnable()
     {
         StartCoroutine(DestroyExplosionEffect());
     }
     IEnumerator DestroyExplosionEffect()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(duration);
         DestroyImmediate(this.gameObject);
     }
 }

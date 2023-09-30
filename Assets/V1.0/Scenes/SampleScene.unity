@@ -5099,6 +5099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3558f17be29ae241a0ec22a4b8030f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distance: 1
 --- !u!1001 &552361880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6427,8 +6428,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameOver: 0
+  requiredConnectedBubblesToPop: 3
   Score: 0
-  neighborDetectionRange: 0
+  ScoreValue: 10
+  neighborDetectionRange: 0.5
   BubbleGameObjectReference: {fileID: 4195552218249377968, guid: 6ea190d15b64b02479ac21ad400f8685, type: 3}
   CeilingBubbles: []
   OnDestroyCluster:
@@ -6436,6 +6439,9 @@ MonoBehaviour:
       m_Calls: []
   EndLinePoint: {fileID: 125960121}
   CeilingController: {fileID: 544823730}
+  CeilingMovingStartTime: 15
+  CeilingMovingRate: 15
+  looseBubbleGravity: 1
 --- !u!4 &722760025
 Transform:
   m_ObjectHideFlags: 0

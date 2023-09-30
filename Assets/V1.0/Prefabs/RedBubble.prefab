@@ -157,6 +157,7 @@ MonoBehaviour:
   isLoose: 0
   colorName: red
   bubbleIcon: {fileID: -1734343986, guid: 2300294ab571f74479d384ba5a2ff1ba, type: 3}
+  distance: 1
 --- !u!95 &216438796
 Animator:
   serializedVersion: 4

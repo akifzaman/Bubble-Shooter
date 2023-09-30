@@ -6,6 +6,7 @@ public class Bubble : MonoBehaviour
     public bool isLoose;
     public string colorName;
     public Sprite bubbleIcon;
+    public float distance;
     private void Start()
     {
         GameManager.Instance.RegisterBubble(this);
@@ -18,6 +19,6 @@ public class Bubble : MonoBehaviour
     }
     public void MoveDownWard()
     {
-        transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+        transform.position = new Vector2(transform.position.x, transform.position.y - distance);
     }
 }

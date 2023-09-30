@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public bool isGameOver;
+    public int requiredConnectedBubblesToPop;
     public int Score;
+    public int ScoreValue;
     public float neighborDetectionRange;
     public GameObject BubbleGameObjectReference;
     public HashSet<Bubble> BubblesInBoard = new HashSet<Bubble>();
@@ -17,6 +19,10 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnDestroyCluster;
     public Transform EndLinePoint;
     public CeilingController CeilingController;
+    public float CeilingMovingStartTime;
+    public float CeilingMovingRate;
+    public float looseBubbleGravity;
+
     public void Awake()
     {
         if(Instance == null) Instance = this;
@@ -25,12 +31,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         isGameOver = false;
-        neighborDetectionRange = 0.5f;
         OnDestroyCluster.AddListener(() =>
         {
             IdentifyLooseBubbleAndPop();
         });
-        if(!GameManager.Instance.isGameOver) InvokeRepeating("MoveDownWard", 15f, 15f);
+        if(!GameManager.Instance.isGameOver) InvokeRepeating("MoveDownWard", CeilingMovingStartTime, CeilingMovingRate);
     }
     public void MoveDownWard()
     {
@@ -82,14 +87,14 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        if(connectedBubbles.Count >= 3)
+        if(connectedBubbles.Count >= requiredConnectedBubblesToPop)
         {
             foreach (Bubble currentBubble in connectedBubbles)
             {
                 BubblesInBoard.Remove(currentBubble);
                 CeilingBubbles.Remove(currentBubble);
                 currentBubble.GetComponent<BubbleController>().OnDestroyBubble();
-                Score += 10;
+                Score += ScoreValue;
                 UIManager.Instance.OnScoreUpdate(Score);
                 Destroy(currentBubble.gameObject);
             }
@@ -133,12 +138,12 @@ public class GameManager : MonoBehaviour
             {
                 if (item.gameObject != null)
                 {
-                    Score += 10;
+                    Score += ScoreValue;
                     UIManager.Instance.OnScoreUpdate(Score);
                     item.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                     item.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
                     item.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-                    item.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+                    item.gameObject.GetComponent<Rigidbody2D>().gravityScale = looseBubbleGravity;
                 }
             }
         }
