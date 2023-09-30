@@ -14,7 +14,7 @@ public class BubbleController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();  
     }
-    private void OnDestroy()
+    public void OnDestroyBubble()
     {
         Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
     }

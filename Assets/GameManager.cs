@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
             {
                 BubblesInBoard.Remove(currentBubble);
                 CeilingBubbles.Remove(currentBubble);
+                currentBubble.GetComponent<BubbleController>().OnDestroyBubble();
                 Destroy(currentBubble.gameObject);
             }
             OnDestroyCluster?.Invoke();
