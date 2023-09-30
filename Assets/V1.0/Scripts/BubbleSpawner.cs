@@ -32,23 +32,38 @@ public class BubbleSpawner : MonoBehaviour
 
     private void Update()
     {
-        var leftStickValue = Gamepad.current.leftStick.ReadValue();
-        float targetRotation = Mathf.Lerp(minRotation, maxRotation, (-leftStickValue.x + 1f) / 2f);
-        transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
-
-        if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.aButton.wasPressedThisFrame)
+        if (Prefabs.Count > 0)
         {
-            OnBubbleShot?.Invoke();
-            counter++;
-            if (nextColorIndex < Prefabs.Count)
+            var leftStickValue = Gamepad.current.leftStick.ReadValue();
+            float targetRotation = Mathf.Lerp(minRotation, maxRotation, (-leftStickValue.x + 1f) / 2f);
+            transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.aButton.wasPressedThisFrame)
             {
-                var bubble = Instantiate(Prefabs[nextColorIndex], SpawnPosition.position, new Quaternion(targetRotation, 0, 0, 0));
-                bubble.GetComponent<BubbleController>().isAllowed = true;
-                Rigidbody2D rb = bubble.GetComponent<Rigidbody2D>();
-                rb.velocity = new Vector2(leftStickValue.x * 10f, Mathf.Max(10, leftStickValue.y * 10f));
-                var randomIndex = Random.Range(0, Prefabs.Count);
-                nextColorIndex = randomIndex;
-                Debug.Log(Prefabs[nextColorIndex]);
+                OnBubbleShot?.Invoke();
+                counter++;
+                if (nextColorIndex < Prefabs.Count)
+                {
+                    var bubble = Instantiate(Prefabs[nextColorIndex], SpawnPosition.position, new Quaternion(targetRotation, 0, 0, 0));
+                    bubble.GetComponent<BubbleController>().isAllowed = true;
+                    Rigidbody2D rb = bubble.GetComponent<Rigidbody2D>();
+                    rb.velocity = new Vector2(leftStickValue.x * 10f, Mathf.Max(10, leftStickValue.y * 10f));
+                    var randomIndex = Random.Range(0, Prefabs.Count);
+                    nextColorIndex = randomIndex;
+                    Debug.Log(Prefabs[nextColorIndex]);
+                }
+                else
+                {
+                    var randomIndex = Random.Range(0, Prefabs.Count);
+                    nextColorIndex = randomIndex;
+                    var bubble = Instantiate(Prefabs[nextColorIndex], SpawnPosition.position, new Quaternion(targetRotation, 0, 0, 0));
+                    bubble.GetComponent<BubbleController>().isAllowed = true;
+                    Rigidbody2D rb = bubble.GetComponent<Rigidbody2D>();
+                    rb.velocity = new Vector2(leftStickValue.x * 10f, Mathf.Max(10, leftStickValue.y * 10f));
+                    randomIndex = Random.Range(0, Prefabs.Count);
+                    nextColorIndex = randomIndex;
+                    Debug.Log(Prefabs[nextColorIndex]);
+                }
             }
         }
     }

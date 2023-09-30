@@ -133,5 +133,9 @@ public class GameManager : MonoBehaviour
         }
         BubblesInBoard.RemoveWhere(bubble => bubble.isLoose == true);
         BubbleSpawner.instance.ModifyPrefabList();
+        if (BubbleSpawner.instance.Prefabs.Count == 0)
+        {
+            Debug.Log("Congratulations!!!");
+        }
     }
 }
