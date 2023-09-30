@@ -117,9 +117,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8626fbdfc5870f4598d3b7e66e2b62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bubbleColor: {r: 0.04460168, g: 1, b: 0, a: 1}
   colorName: green
   isAllowed: 0
+  ExplosionEffect: {fileID: 1847021983677345479, guid: d1a9640ecc5586a40a731a697e4620eb, type: 3}
 --- !u!50 &1056002814889837544
 Rigidbody2D:
   serializedVersion: 4
@@ -155,7 +155,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isVisited: 0
   isLoose: 0
-  bubbleColor: {r: 0.043137256, g: 1, b: 0, a: 1}
   colorName: green
 --- !u!95 &2147000903
 Animator:
