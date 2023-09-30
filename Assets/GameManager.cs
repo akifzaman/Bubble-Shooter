@@ -84,8 +84,9 @@ public class GameManager : MonoBehaviour
                 Destroy(currentBubble.gameObject);
             }
             OnDestroyCluster?.Invoke();
-        }       
+        }
     }
+    
     public void IdentifyLooseBubbleAndPop()
     {
         foreach (var item in CeilingBubbles)
@@ -131,5 +132,6 @@ public class GameManager : MonoBehaviour
             }
         }
         BubblesInBoard.RemoveWhere(bubble => bubble.isLoose == true);
+        BubbleSpawner.instance.ModifyPrefabList();
     }
 }
