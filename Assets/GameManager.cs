@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour
                 CeilingBubbles.Remove(currentBubble);
                 Destroy(currentBubble.gameObject);
             }
-        }
-        OnDestroyCluster?.Invoke();
+            OnDestroyCluster?.Invoke();
+        }       
     }
     public void IdentifyLooseBubbleAndPop()
     {
