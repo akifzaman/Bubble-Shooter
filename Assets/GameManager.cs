@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public HashSet<Bubble> connectedBubbles = new HashSet<Bubble>();
     public List<Bubble> CeilingBubbles = new List<Bubble>();
     public UnityEvent OnDestroyCluster;
+    public CeilingController CeilingController;
     public void Awake()
     {
         if(Instance == null) Instance = this;
@@ -22,6 +23,15 @@ public class GameManager : MonoBehaviour
         {
             IdentifyLooseBubbleAndPop();
         });
+        InvokeRepeating("MoveDownWard", 15f, 15f);
+    }
+    public void MoveDownWard()
+    {
+        foreach (var item in BubblesInBoard)
+        {
+            item.MoveDownWard();
+        }
+        CeilingController.MoveDownWard();
     }
     public void RegisterBubble(Bubble bubble)
     {
@@ -89,12 +99,6 @@ public class GameManager : MonoBehaviour
             while (LooseBubblesCheckerStack.Count > 0)
             {
                 Bubble currentBubble = LooseBubblesCheckerStack.Pop();
-                //if (currentBubble.isLoose)
-                //{
-                //    //Debug.Log("Hello");
-                //    if (LooseBubblesCheckerStack.Count > 0) currentBubble = LooseBubblesCheckerStack.Pop();
-                //    continue;
-                //}
                 Collider2D[] neighbors = Physics2D.OverlapCircleAll(currentBubble.transform.position, 0.45f);
 
                 foreach (Collider2D neighbor in neighbors)
@@ -116,7 +120,14 @@ public class GameManager : MonoBehaviour
         {
             if (item.isLoose)
             {
-                if (item.gameObject != null) Destroy(item.gameObject);
+                if (item.gameObject != null)
+                {
+                    item.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+                    item.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                    item.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                    item.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+                    //Destroy(item.gameObject);
+                }
             }
         }
         BubblesInBoard.RemoveWhere(bubble => bubble.isLoose == true);

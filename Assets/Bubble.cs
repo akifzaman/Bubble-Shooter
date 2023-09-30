@@ -18,4 +18,8 @@ public class Bubble : MonoBehaviour
             isLoose = true;
         });
     }
+    public void MoveDownWard()
+    {
+        transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+    }
 }

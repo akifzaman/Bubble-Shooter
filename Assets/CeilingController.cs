@@ -10,4 +10,8 @@ public class CeilingController : MonoBehaviour
             GameManager.Instance.CeilingBubbles.Add(collision.transform.GetComponent<Bubble>());
         }
     }
+    public void MoveDownWard()
+    {
+        transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+    }
 }
