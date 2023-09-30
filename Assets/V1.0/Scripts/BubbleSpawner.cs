@@ -23,7 +23,8 @@ public class BubbleSpawner : MonoBehaviour
     }
     public void Start()
     {
-        nextColorIndex = 1;
+        nextColorIndex = Random.Range(0, Prefabs.Count);
+        UIManager.Instance.UpdateNextBubbleImage(Prefabs[nextColorIndex]);
         IdenticalBubbles["blue"] = 0;
         IdenticalBubbles["red"] = 0;
         IdenticalBubbles["yellow"] = 0;
@@ -50,7 +51,8 @@ public class BubbleSpawner : MonoBehaviour
                     rb.velocity = new Vector2(leftStickValue.x * 10f, Mathf.Max(10, leftStickValue.y * 10f));
                     var randomIndex = Random.Range(0, Prefabs.Count);
                     nextColorIndex = randomIndex;
-                    Debug.Log(Prefabs[nextColorIndex]);
+                    UIManager.Instance.UpdateNextBubbleImage(Prefabs[nextColorIndex]);
+                    //Debug.Log(Prefabs[nextColorIndex]);
                 }
                 else
                 {
@@ -62,7 +64,8 @@ public class BubbleSpawner : MonoBehaviour
                     rb.velocity = new Vector2(leftStickValue.x * 10f, Mathf.Max(10, leftStickValue.y * 10f));
                     randomIndex = Random.Range(0, Prefabs.Count);
                     nextColorIndex = randomIndex;
-                    Debug.Log(Prefabs[nextColorIndex]);
+                    UIManager.Instance.UpdateNextBubbleImage(Prefabs[nextColorIndex]);
+                    //Debug.Log(Prefabs[nextColorIndex]);
                 }
             }
         }

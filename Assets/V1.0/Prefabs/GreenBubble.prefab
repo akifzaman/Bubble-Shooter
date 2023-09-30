@@ -156,6 +156,7 @@ MonoBehaviour:
   isVisited: 0
   isLoose: 0
   colorName: green
+  bubbleIcon: {fileID: -1468228076, guid: 2300294ab571f74479d384ba5a2ff1ba, type: 3}
 --- !u!95 &2147000903
 Animator:
   serializedVersion: 4

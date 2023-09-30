@@ -156,6 +156,7 @@ MonoBehaviour:
   isVisited: 0
   isLoose: 0
   colorName: yellow
+  bubbleIcon: {fileID: -1757943564, guid: 2300294ab571f74479d384ba5a2ff1ba, type: 3}
 --- !u!95 &504634223
 Animator:
   serializedVersion: 4

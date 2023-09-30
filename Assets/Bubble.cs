@@ -5,7 +5,7 @@ public class Bubble : MonoBehaviour
     public bool isVisited;
     public bool isLoose;
     public string colorName;
-    
+    public Sprite bubbleIcon;
     private void Start()
     {
         GameManager.Instance.RegisterBubble(this);
