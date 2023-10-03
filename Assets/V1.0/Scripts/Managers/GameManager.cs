@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
             {
                 if (item.gameObject != null)
                 {
-                    Score += ScoreValue;
+                    Score += ScoreValue * 10;
                     UIManager.Instance.OnScoreUpdate(Score);
                     item.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                     item.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
