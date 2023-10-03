@@ -3610,11 +3610,13 @@ MonoBehaviour:
   - {fileID: 3580103862556096271, guid: db007a0ee5be1a94bb6d86b8673e9f98, type: 3}
   - {fileID: -1336277703596424213, guid: fcc0dd3f6118da0459f5d305870e5cef, type: 3}
   SpawnPosition: {fileID: 1681735714}
-  rotationSpeed: 45
+  rotationSpeed: 0.8
   minRotation: -90
   maxRotation: 90
   nextColorIndex: 0
   leftStickValue: {x: 0, y: 0}
+  keyBoardValueLeft: 0
+  keyBoardValueRight: 0
   targetRotation: 0
   OnBubbleShot:
     m_PersistentCalls:

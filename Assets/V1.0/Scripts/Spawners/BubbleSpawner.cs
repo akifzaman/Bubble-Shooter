@@ -19,7 +19,6 @@ public class BubbleSpawner : MonoBehaviour
     public float keyBoardValueRight;
     public float targetRotation;
     public Dictionary<string, int> IdenticalBubbles = new Dictionary<string, int>();
-    private Vector2 shootDirection;
     public UnityEvent OnBubbleShot;
     public void Awake()
     {
@@ -39,27 +38,38 @@ public class BubbleSpawner : MonoBehaviour
     {
         if (Prefabs.Count > 0)
         {
-            
-            keyBoardValueLeft = Keyboard.current.aKey.ReadValue();  
+            //Spawner rotation
+            keyBoardValueLeft = Keyboard.current.aKey.ReadValue();
             keyBoardValueRight = Keyboard.current.dKey.ReadValue();
             if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed)
             {
-                targetRotation += 0.5f;
+                targetRotation += rotationSpeed;
                 targetRotation = Mathf.Clamp(targetRotation, minRotation, maxRotation);
             }
             else if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
             {
-                targetRotation -= 0.5f;
+                targetRotation -= rotationSpeed;
                 targetRotation = Mathf.Clamp(targetRotation, minRotation, maxRotation);
             }
             else if (Gamepad.current.leftStick.IsPressed())
             {
                 leftStickValue = Gamepad.current.leftStick.ReadValue();
-                targetRotation = Mathf.Lerp(minRotation, maxRotation, (-leftStickValue.x + 1f) / 2f);
+                if(leftStickValue.x < 0)
+                {
+                    targetRotation += rotationSpeed;
+                    targetRotation = Mathf.Clamp(targetRotation, minRotation, maxRotation);
+                }
+                else
+                {
+                    targetRotation -= rotationSpeed;
+                    targetRotation = Mathf.Clamp(targetRotation, minRotation, maxRotation);
+                }
             }
+
             transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
 
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            //Bubble shoot
+            if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.aButton.wasPressedThisFrame)
             {
                 OnBubbleShot?.Invoke();
                 counter++;
@@ -69,21 +79,6 @@ public class BubbleSpawner : MonoBehaviour
                     bubble.GetComponent<BubbleController>().isAllowed = true;
                     Rigidbody2D rb = bubble.GetComponent<Rigidbody2D>();
                     rb.velocity = new Vector2(-(targetRotation / 90) * 10f, 10f);
-                    var randomIndex = Random.Range(0, Prefabs.Count);
-                    nextColorIndex = randomIndex;
-                    UIManager.Instance.UpdateNextBubbleImage(Prefabs[nextColorIndex]);
-                }
-            }
-            if (Gamepad.current.aButton.wasPressedThisFrame)
-            {
-                OnBubbleShot?.Invoke();
-                counter++;
-                if (nextColorIndex < Prefabs.Count)
-                {
-                    var bubble = Instantiate(Prefabs[nextColorIndex], SpawnPosition.position, new Quaternion(targetRotation, 0, 0, 0));
-                    bubble.GetComponent<BubbleController>().isAllowed = true;
-                    Rigidbody2D rb = bubble.GetComponent<Rigidbody2D>();
-                    rb.velocity = new Vector2(leftStickValue.x * 10f, 10f); ;
                     var randomIndex = Random.Range(0, Prefabs.Count);
                     nextColorIndex = randomIndex;
                     UIManager.Instance.UpdateNextBubbleImage(Prefabs[nextColorIndex]);
